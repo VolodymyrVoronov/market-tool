@@ -8,6 +8,9 @@ import { ROUTES } from "./constants";
 
 import App from "./App";
 
+import "./styles/custom.css";
+import "./styles/globals.css";
+
 const router = createBrowserRouter([
   {
     path: ROUTES.MAIN,

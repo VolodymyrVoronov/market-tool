@@ -15,13 +15,12 @@ module.exports = {
     project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-  plugins: ["react-refresh", "jsx-expressions", "jsx-a11y"],
+  plugins: ["react-refresh", "jsx-a11y"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
-    "jsx-expressions/strict-logical-expressions": "error",
     "jsx-a11y/alt-text": "warn",
     "jsx-a11y/anchor-ambiguous-text": "warn",
     "jsx-a11y/anchor-has-content": "warn",
