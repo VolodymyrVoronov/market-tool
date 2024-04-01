@@ -40,7 +40,9 @@ const StockCard = ({
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">{ticker}</CardTitle>
-        <CardDescription className="text-lg">Price: ${price}</CardDescription>
+        <CardDescription className="text-lg">
+          Price: <span className="font-bold">${price}</span>
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-1">
         <span className="flex flex-row justify-between">

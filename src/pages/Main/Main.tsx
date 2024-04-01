@@ -11,6 +11,12 @@ import SectionHeader from "@/components/SectionHeader/SectionHeader";
 import Spinner from "@/components/Spinner/Spinner";
 import StockCard from "@/components/StockCard/StockCard";
 import { Separator } from "@/components/ui/separator";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const mock: ITopGainersLosers = {
   metadata: "Top gainers, losers, and most actively traded US tickers",
@@ -482,75 +488,114 @@ const Main = (): JSX.Element => {
 
       <Separator />
 
-      <SectionHeader>
-        Top Gainers{" "}
-        <span className="text-green-600 text-lg md:text-2xl">
-          <RiArrowRightUpLine />
-        </span>
-      </SectionHeader>
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full"
+        defaultValue="item-1"
+      >
+        <AccordionItem value="item-1">
+          <AccordionTrigger>
+            <SectionHeader>
+              Top Gainers{" "}
+              <span className="text-green-600 text-lg md:text-2xl">
+                <RiArrowRightUpLine />
+              </span>
+            </SectionHeader>
+          </AccordionTrigger>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {top_gainers.map(
-          ({ ticker, price, change_amount, change_percentage, volume }) => (
-            <StockCard
-              key={ticker}
-              ticker={ticker}
-              price={price}
-              change_amount={change_amount}
-              change_percentage={change_percentage}
-              volume={volume}
-            />
-          )
-        )}
-      </div>
+          <AccordionContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {top_gainers.map(
+                ({
+                  ticker,
+                  price,
+                  change_amount,
+                  change_percentage,
+                  volume,
+                }) => (
+                  <StockCard
+                    key={ticker}
+                    ticker={ticker}
+                    price={price}
+                    change_amount={change_amount}
+                    change_percentage={change_percentage}
+                    volume={volume}
+                  />
+                )
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      <Separator />
+        <AccordionItem value="item-2">
+          <AccordionTrigger>
+            <SectionHeader>
+              Top Losers{" "}
+              <span className="text-red-600 text-lg md:text-2xl">
+                <RiArrowRightDownLine />
+              </span>
+            </SectionHeader>
+          </AccordionTrigger>
 
-      <SectionHeader>
-        Top Losers{" "}
-        <span className="text-red-600 text-lg md:text-2xl">
-          <RiArrowRightDownLine />
-        </span>
-      </SectionHeader>
+          <AccordionContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {top_losers.map(
+                ({
+                  ticker,
+                  price,
+                  change_amount,
+                  change_percentage,
+                  volume,
+                }) => (
+                  <StockCard
+                    key={ticker}
+                    ticker={ticker}
+                    price={price}
+                    change_amount={change_amount}
+                    change_percentage={change_percentage}
+                    volume={volume}
+                  />
+                )
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {top_losers.map(
-          ({ ticker, price, change_amount, change_percentage, volume }) => (
-            <StockCard
-              key={ticker}
-              ticker={ticker}
-              price={price}
-              change_amount={change_amount}
-              change_percentage={change_percentage}
-              volume={volume}
-            />
-          )
-        )}
-      </div>
+        <AccordionItem value="item-3">
+          <AccordionTrigger>
+            <SectionHeader>
+              Most Actively Traded{" "}
+              <span className="text-blue-600 text-lg md:text-2xl">
+                <RiBarChartFill />
+              </span>
+            </SectionHeader>
+          </AccordionTrigger>
 
-      <Separator />
-
-      <SectionHeader>
-        Most Actively Traded{" "}
-        <span className="text-blue-600 text-lg md:text-2xl">
-          <RiBarChartFill />
-        </span>
-      </SectionHeader>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {most_actively_traded.map(
-          ({ ticker, price, change_amount, change_percentage, volume }) => (
-            <StockCard
-              key={ticker}
-              ticker={ticker}
-              price={price}
-              change_amount={change_amount}
-              change_percentage={change_percentage}
-              volume={volume}
-            />
-          )
-        )}
-      </div>
+          <AccordionContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {most_actively_traded.map(
+                ({
+                  ticker,
+                  price,
+                  change_amount,
+                  change_percentage,
+                  volume,
+                }) => (
+                  <StockCard
+                    key={ticker}
+                    ticker={ticker}
+                    price={price}
+                    change_amount={change_amount}
+                    change_percentage={change_percentage}
+                    volume={volume}
+                  />
+                )
+              )}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };
