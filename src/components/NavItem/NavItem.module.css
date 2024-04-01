@@ -1,0 +1,24 @@
+.link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+
+  padding: 5px 10px;
+
+  border-radius: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.active {
+  background-color: #f4f4f5;
+  font-weight: 700;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

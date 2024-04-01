@@ -6,16 +6,29 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { ROUTES } from "./constants";
 
-import App from "./App";
+import Stock from "./pages/Stock/Stock";
+import Main from "./pages/Main/Main";
+
+import AppLayout from "./components/AppLayout/AppLayout";
 
 import "./styles/custom.css";
 import "./styles/globals.css";
 
+import "@fontsource-variable/nunito";
+
 const router = createBrowserRouter([
   {
-    path: ROUTES.MAIN,
-    element: <App />,
-    children: [],
+    element: <AppLayout />,
+    children: [
+      {
+        path: ROUTES.MAIN,
+        element: <Main />,
+      },
+      {
+        path: ROUTES.STOCK,
+        element: <Stock />,
+      },
+    ],
   },
 ]);
 
