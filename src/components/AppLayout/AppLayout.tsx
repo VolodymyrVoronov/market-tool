@@ -7,7 +7,7 @@ const AppLayout = (): JSX.Element => {
     <main className="flex flex-col md:flex-row h-[100vh]">
       <Sidebar />
 
-      <div className=" w-full overflow-auto">
+      <div className="w-full overflow-auto p-3">
         <Outlet />
       </div>
     </main>

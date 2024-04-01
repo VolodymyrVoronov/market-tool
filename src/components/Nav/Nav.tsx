@@ -33,7 +33,7 @@ const Nav = (): JSX.Element => {
         {navigation.map((item) => (
           <li key={item.id}>
             <NavItem to={item.link}>
-              {item.icon} {item.title}
+              <span className="text-blue-600">{item.icon}</span> {item.title}
             </NavItem>
           </li>
         ))}
