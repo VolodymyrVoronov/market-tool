@@ -12,7 +12,7 @@ export interface IMarket {
 
 export interface IMarketStatus {
   endpoint: string;
-  markets: IMarket;
+  markets: IMarket[];
 }
 
 export const getMarketStatus = async (): Promise<IMarketStatus> => {

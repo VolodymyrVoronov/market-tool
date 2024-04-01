@@ -62,6 +62,7 @@ const StockCard = ({
           <span className="font-bold text-sky-600">{volume}</span>
         </span>
       </CardContent>
+
       {children ? <CardFooter>{children}</CardFooter> : null}
     </Card>
   );

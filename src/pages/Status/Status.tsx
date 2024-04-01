@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getMarketStatus, IMarketStatus } from "@/services/apiMarketStatus";
 
 import Spinner from "@/components/Spinner/Spinner";
+import StatusCard from "@/components/StatusCard/StatusCard";
 import { Separator } from "@/components/ui/separator";
 
 const mock: IMarketStatus = {
@@ -172,6 +173,7 @@ const Status = () => {
         <Spinner />
       </div>
     );
+
   if (error) return <div>Error</div>;
 
   console.log(marketStatus);
@@ -182,12 +184,37 @@ const Status = () => {
     <div className="flex flex-col gap-5">
       <span className="flex flex-col gap-1">
         <h1 className="text-lg md:text-xl lg:text-2xl font-semibold">
-          Global Market Open & Close Status
+          {endpoint}
         </h1>
         <span>Last updated: {new Date().toLocaleString()}</span>
       </span>
 
       <Separator />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        {markets.map(
+          ({
+            market_type,
+            region,
+            primary_exchanges,
+            local_open,
+            local_close,
+            current_status,
+            notes,
+          }) => (
+            <StatusCard
+              key={self.crypto.randomUUID()}
+              market_type={market_type}
+              region={region}
+              primary_exchanges={primary_exchanges}
+              local_open={local_open}
+              local_close={local_close}
+              current_status={current_status}
+              notes={notes}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 };

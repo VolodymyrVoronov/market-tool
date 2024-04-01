@@ -465,6 +465,7 @@ const Main = (): JSX.Element => {
         <Spinner />
       </div>
     );
+
   if (error) return <div>Error</div>;
 
   console.log(topGainersLosers);
