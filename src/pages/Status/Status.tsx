@@ -176,18 +176,7 @@ const Status = () => {
 
   console.log(marketStatus);
 
-  const {
-    endpoint,
-    markets: {
-      market_type,
-      region,
-      primary_exchanges,
-      local_open,
-      local_close,
-      current_status,
-      notes,
-    },
-  } = mock;
+  const { endpoint, markets } = mock;
 
   return (
     <div className="flex flex-col gap-5">
