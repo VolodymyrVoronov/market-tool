@@ -1,11 +1,11 @@
-import { RiHome2Fill, RiStockFill } from "react-icons/ri";
+import { RiHome2Fill, RiStockFill, RiBaseStationFill } from "react-icons/ri";
 
 import { ROUTES } from "@/constants";
 
 import NavItem from "../NavItem/NavItem";
 
 interface INavigation {
-  id: number;
+  id: string;
   title: string;
   link: string;
   icon: JSX.Element;
@@ -13,13 +13,19 @@ interface INavigation {
 
 const navigation: INavigation[] = [
   {
-    id: 1,
+    id: self.crypto.randomUUID(),
     title: "Main",
     link: ROUTES.MAIN,
     icon: <RiHome2Fill />,
   },
   {
-    id: 2,
+    id: self.crypto.randomUUID(),
+    title: "Status",
+    link: ROUTES.STATUS,
+    icon: <RiBaseStationFill />,
+  },
+  {
+    id: self.crypto.randomUUID(),
     title: "Stock",
     link: ROUTES.STOCK,
     icon: <RiStockFill />,

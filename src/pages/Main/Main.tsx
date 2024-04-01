@@ -451,7 +451,7 @@ const mock: ITopGainersLosers = {
 
 const Main = (): JSX.Element => {
   const {
-    data: dataTopGainersLosers,
+    data: topGainersLosers,
     error,
     isLoading,
   } = useQuery({
@@ -467,7 +467,7 @@ const Main = (): JSX.Element => {
     );
   if (error) return <div>Error</div>;
 
-  console.log(dataTopGainersLosers);
+  console.log(topGainersLosers);
 
   const {
     metadata,
