@@ -24,12 +24,13 @@ const Status = () => {
     );
 
   if (error) return <div>Error</div>;
-
   if (!marketStatus) return <div>No data</div>;
 
   console.log(marketStatus);
 
   const { endpoint, markets } = marketStatus;
+
+  if (!markets) return <div>No data available right now</div>;
 
   return (
     <div className="flex flex-col gap-5">

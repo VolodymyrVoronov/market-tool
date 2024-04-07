@@ -18,7 +18,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-
 const Main = (): JSX.Element => {
   const {
     data: topGainersLosers,
@@ -37,7 +36,6 @@ const Main = (): JSX.Element => {
     );
 
   if (error) return <div>Error</div>;
-
   if (!topGainersLosers) return <div>No data</div>;
 
   console.log(topGainersLosers);
@@ -49,6 +47,9 @@ const Main = (): JSX.Element => {
     top_losers,
     most_actively_traded,
   } = topGainersLosers;
+
+  if (!top_gainers || !top_losers || !most_actively_traded)
+    return <div>No data available right now</div>;
 
   return (
     <div className="flex flex-col gap-5">
