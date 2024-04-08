@@ -6,6 +6,7 @@ import { getTicker } from "@/services/apiTickerSearch";
 
 import Spinner from "@/components/Spinner/Spinner";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const Stock = (): JSX.Element => {
   const queryClient = useQueryClient();
@@ -41,20 +42,26 @@ const Stock = (): JSX.Element => {
 
   console.log(ticker);
 
-  if (ticker.bestMatches.length) return <div>No data available right now</div>;
-
   const onInputSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
   return (
     <div>
-      <Input
-        onChange={onInputSearchChange}
-        type="text"
-        placeholder="AAPL"
-        className=""
-      />
+      <div className="flex flex-wrap gap-5">
+        <Input
+          className="max-w-[300px]"
+          type="text"
+          placeholder="AAPL"
+          onChange={onInputSearchChange}
+        />
+
+        {ticker.bestMatches.map((item) => (
+          <Button key={item.symbol} variant="outline">
+            {item.name}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 };
