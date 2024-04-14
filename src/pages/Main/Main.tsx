@@ -90,7 +90,7 @@ const Main = (): JSX.Element => {
     <div ref={containerRef} className="flex flex-col gap-5 pb-5">
       <div className="sticky top-0 flex flex-col md:flex-row items-center gap-3 md:gap-5 backdrop-blur-2xl z-10 rounded-lg p-2">
         <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-nowrap">
-          Market news by category
+          Market news ({news?.length}) by category
         </h1>
         <Select
           value={newsCategory}
@@ -121,28 +121,28 @@ const Main = (): JSX.Element => {
             ))}
           </div>
 
-          {news && news.length > newAmountVisible && (
-            <>
-              {scrollPosition >= 100 && (
-                <div className="sticky bottom-0 flex justify-center items-center gap-5 backdrop-blur-2xl z-10 rounded-lg p-2 w-max m-auto">
-                  <Button
-                    className="text-sm sm:text-base font-bold text-nowrap"
-                    onClick={onMoreButtonClick}
-                  >
-                    Show more <RiMoreFill className="ml-2 h-5 w-5" />
-                  </Button>
-
-                  <Button
-                    className="text-sm sm:text-base font-bold text-nowrap"
-                    onClick={onToTopButtonClick}
-                    variant="ghost"
-                  >
-                    To top <RiArrowUpLine className="ml-2 h-5 w-5" />
-                  </Button>
-                </div>
+          <div className="sticky bottom-0 flex justify-center items-center gap-5 backdrop-blur-2xl z-10 rounded-lg p-2 w-max m-auto">
+            {news &&
+              news.length > newAmountVisible &&
+              scrollPosition >= 100 && (
+                <Button
+                  className="text-sm sm:text-base font-bold text-nowrap"
+                  onClick={onMoreButtonClick}
+                >
+                  Show more <RiMoreFill className="ml-2 h-5 w-5" />
+                </Button>
               )}
-            </>
-          )}
+
+            {scrollPosition >= 100 && (
+              <Button
+                className="text-sm sm:text-base font-bold text-nowrap"
+                onClick={onToTopButtonClick}
+                variant="ghost"
+              >
+                To top <RiArrowUpLine className="ml-2 h-5 w-5" />
+              </Button>
+            )}
+          </div>
         </>
       )}
     </div>
