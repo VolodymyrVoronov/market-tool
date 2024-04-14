@@ -57,8 +57,8 @@ const NewsCard = ({
 
       <CardContent>
         <div className="flex justify-between">
-          <span>{source}</span>
-          <span>{format(new Date(datetime * 1000), "dd.MM.yyyy HH:mm")}</span>
+          <span className="font-bold">{source}</span>
+          <span className="italic">{format(new Date(datetime * 1000), "dd.MM.yyyy HH:mm")}</span>
         </div>
 
         {image ? (
