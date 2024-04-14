@@ -9,3 +9,5 @@ export const ROUTES = {
   STATUS: PATHS.STATUS,
   STOCK: PATHS.STOCK,
 } as const;
+
+export const AMOUNT_NEWS_VISIBLE = 6;

@@ -1,32 +1,51 @@
-import { useQuery } from "@tanstack/react-query";
-import {
-  RiArrowRightDownLine,
-  RiArrowRightUpLine,
-  RiBarChartFill,
-} from "react-icons/ri";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef, useState } from "react";
+import { RiArrowUpLine, RiMoreFill } from "react-icons/ri";
 
-import { getTopGainersLosers } from "@/services/apiMain";
+import { AMOUNT_NEWS_VISIBLE } from "@/constants";
+import useWindowPosition from "@/hooks/useWindowPosition";
+import { getMarketNews } from "@/services/news";
+import { NewsCategory } from "@/types";
 
-import SectionHeader from "@/components/SectionHeader/SectionHeader";
+import NewsCard from "@/components/NewsCard/NewsCard";
 import Spinner from "@/components/Spinner/Spinner";
-import StockCard from "@/components/StockCard/StockCard";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Main = (): JSX.Element => {
+  const queryClient = useQueryClient();
+
   const {
-    data: topGainersLosers,
+    data: news,
     error,
     isLoading,
+    isRefetching,
   } = useQuery({
-    queryKey: ["topGainersLosers"],
-    queryFn: getTopGainersLosers,
+    queryKey: ["market-news"],
+    queryFn: () => getMarketNews(newsCategory),
+    refetchOnWindowFocus: false,
   });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const [newsCategory, setNewsCategory] = useState<NewsCategory>("general");
+  const [newAmountVisible, setNewAmountVisible] = useState(AMOUNT_NEWS_VISIBLE);
+
+  useEffect(() => {
+    if (newsCategory) {
+      queryClient.invalidateQueries({
+        queryKey: ["market-news"],
+      });
+    }
+  }, [newsCategory, queryClient]);
+
+  const scrollPosition = useWindowPosition();
 
   if (isLoading)
     return (
@@ -35,141 +54,97 @@ const Main = (): JSX.Element => {
       </div>
     );
 
-  if (error) return <div>Error</div>;
-  if (!topGainersLosers) return <div>No data</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-  console.log(topGainersLosers);
+  const onNewsCategoryChange = (value: NewsCategory): void => {
+    setNewsCategory(value);
+  };
 
-  const {
-    metadata,
-    last_updated,
-    top_gainers,
-    top_losers,
-    most_actively_traded,
-  } = topGainersLosers;
+  const onMoreButtonClick = (): void => {
+    setNewAmountVisible((prev) => prev + AMOUNT_NEWS_VISIBLE);
 
-  if (!top_gainers || !top_losers || !most_actively_traded)
-    return <div>No data available right now</div>;
+    const timerId = setTimeout(() => {
+      window.scrollBy({
+        top: 500,
+        behavior: "smooth",
+      });
+
+      clearTimeout(timerId);
+    }, 500);
+  };
+
+  const onToTopButtonClick = (): void => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  console.log(news, isLoading, isRefetching);
+
+  console.log(scrollPosition);
 
   return (
-    <div className="flex flex-col gap-5">
-      <span className="flex flex-col gap-1">
-        <h1 className="text-lg md:text-xl lg:text-2xl font-semibold">
-          {metadata}
+    <div ref={containerRef} className="flex flex-col gap-5 pb-5">
+      <div className="sticky top-0 flex flex-col md:flex-row items-center gap-3 md:gap-5 backdrop-blur-2xl z-10 rounded-lg p-2">
+        <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-nowrap">
+          Market news by category
         </h1>
-        <span>Last updated: {last_updated}</span>
-      </span>
+        <Select
+          value={newsCategory}
+          onValueChange={onNewsCategoryChange}
+          disabled={isRefetching}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select news category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="general">General</SelectItem>
+            <SelectItem value="forex">Forex</SelectItem>
+            <SelectItem value="crypto">Crypto</SelectItem>
+            <SelectItem value="merger">Merger</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-      <Separator />
+      {isRefetching ? (
+        <div className="flex justify-center items-center h-[100%]">
+          <Spinner />
+        </div>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+            {news?.slice(0, newAmountVisible).map((news, index) => (
+              <NewsCard key={news.id} keyIndex={index} {...news} />
+            ))}
+          </div>
 
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full"
-        defaultValue="item-1"
-      >
-        <AccordionItem value="item-1">
-          <AccordionTrigger>
-            <SectionHeader>
-              Top Gainers{" "}
-              <span className="text-green-600 text-lg md:text-2xl">
-                <RiArrowRightUpLine />
-              </span>
-            </SectionHeader>
-          </AccordionTrigger>
+          {news && news.length > newAmountVisible && (
+            <>
+              {scrollPosition >= 100 && (
+                <div className="sticky bottom-0 flex justify-center items-center gap-5 backdrop-blur-2xl z-10 rounded-lg p-2 w-max m-auto">
+                  <Button
+                    className="text-sm sm:text-base font-bold text-nowrap"
+                    onClick={onMoreButtonClick}
+                  >
+                    Show more <RiMoreFill className="ml-2 h-5 w-5" />
+                  </Button>
 
-          <AccordionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {top_gainers.map(
-                ({
-                  ticker,
-                  price,
-                  change_amount,
-                  change_percentage,
-                  volume,
-                }) => (
-                  <StockCard
-                    key={ticker}
-                    ticker={ticker}
-                    price={price}
-                    change_amount={change_amount}
-                    change_percentage={change_percentage}
-                    volume={volume}
-                  />
-                )
+                  <Button
+                    className="text-sm sm:text-base font-bold text-nowrap"
+                    onClick={onToTopButtonClick}
+                    variant="ghost"
+                  >
+                    To top <RiArrowUpLine className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
               )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="item-2">
-          <AccordionTrigger>
-            <SectionHeader>
-              Top Losers{" "}
-              <span className="text-red-600 text-lg md:text-2xl">
-                <RiArrowRightDownLine />
-              </span>
-            </SectionHeader>
-          </AccordionTrigger>
-
-          <AccordionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {top_losers.map(
-                ({
-                  ticker,
-                  price,
-                  change_amount,
-                  change_percentage,
-                  volume,
-                }) => (
-                  <StockCard
-                    key={ticker}
-                    ticker={ticker}
-                    price={price}
-                    change_amount={change_amount}
-                    change_percentage={change_percentage}
-                    volume={volume}
-                  />
-                )
-              )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="item-3">
-          <AccordionTrigger>
-            <SectionHeader>
-              Most Actively Traded{" "}
-              <span className="text-blue-600 text-lg md:text-2xl">
-                <RiBarChartFill />
-              </span>
-            </SectionHeader>
-          </AccordionTrigger>
-
-          <AccordionContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {most_actively_traded.map(
-                ({
-                  ticker,
-                  price,
-                  change_amount,
-                  change_percentage,
-                  volume,
-                }) => (
-                  <StockCard
-                    key={ticker}
-                    ticker={ticker}
-                    price={price}
-                    change_amount={change_amount}
-                    change_percentage={change_percentage}
-                    volume={volume}
-                  />
-                )
-              )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -2,11 +2,9 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, useEffect } from "react";
 import { useDebounceValue } from "usehooks-ts";
 
-import { getTicker } from "@/services/apiTickerSearch";
 
 import Spinner from "@/components/Spinner/Spinner";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 const Stock = (): JSX.Element => {
   const queryClient = useQueryClient();
@@ -18,14 +16,14 @@ const Stock = (): JSX.Element => {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["ticker"],
-    queryFn: () => getTicker(query),
+    queryKey: ["data"],
+    queryFn: () => {},
   });
 
   useEffect(() => {
     if (query !== "") {
       queryClient.invalidateQueries({
-        queryKey: ["ticker"],
+        queryKey: ["data"],
       });
     }
   }, [query, queryClient]);
@@ -56,11 +54,7 @@ const Stock = (): JSX.Element => {
           onChange={onInputSearchChange}
         />
 
-        {ticker.bestMatches.map((item) => (
-          <Button key={item.symbol} variant="outline">
-            {item.name}
-          </Button>
-        ))}
+        
       </div>
     </div>
   );
