@@ -1,8 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
 import Spinner from "@/components/Spinner/Spinner";
-import StatusCard from "@/components/StatusCard/StatusCard";
-import { Separator } from "@/components/ui/separator";
 
 const Status = () => {
   const { data, error, isLoading } = useQuery({

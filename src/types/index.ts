@@ -11,3 +11,10 @@ export interface INews {
   summary: string;
   url: string;
 }
+
+export interface IStockSearchResult {
+  description: string;
+  displaySymbol: string;
+  symbol: string;
+  type: string;
+}
