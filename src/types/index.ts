@@ -18,3 +18,18 @@ export interface IStockSearchResult {
   symbol: string;
   type: string;
 }
+
+export interface IMarketStatus {
+  exchange: string;
+  holiday: null;
+  isOpen: boolean;
+  session: string;
+  t: number;
+  timezone: string;
+}
+
+export interface IHoliday {
+  eventName: string;
+  atDate: string;
+  tradingHour: string;
+}

@@ -19,8 +19,9 @@ const Stock = (): JSX.Element => {
     isLoading,
     isRefetching,
   } = useQuery({
-    queryKey: ["data"],
+    queryKey: ["stocks"],
     queryFn: () => searchStock(query),
+    refetchOnWindowFocus: false,
   });
 
   if (isLoading)
@@ -41,7 +42,7 @@ const Stock = (): JSX.Element => {
 
   const onSearchButtonClick = (): void => {
     queryClient.invalidateQueries({
-      queryKey: ["data"],
+      queryKey: ["stocks"],
     });
 
     const timerId = setTimeout(() => {
