@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
 
 import { searchStock } from "@/services/stock";
