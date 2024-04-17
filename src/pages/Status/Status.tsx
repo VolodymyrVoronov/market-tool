@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 
 import { getMarketHolidays, getMarketStatus } from "@/services/status";
 
@@ -7,8 +7,8 @@ import Holiday from "@/components/Holiday/Holiday";
 import HolidaysGrid from "@/components/HolidaysGrid/HolidaysGrid";
 import Spinner from "@/components/Spinner/Spinner";
 import StatusBar from "@/components/StatusBar/StatusBar";
-import { Badge } from "@/components/ui/badge";
 import TodayHolyday from "@/components/TodayHolyday/TodayHolyday";
+import { Badge } from "@/components/ui/badge";
 
 const Status = () => {
   const {
@@ -47,7 +47,7 @@ const Status = () => {
     ...new Set(holidays?.data.map((holiday) => +holiday.atDate.split("-")[0])),
   ];
 
-  const holidaysByYear = (year: number) => {
+  const holidaysByYear = (year: number): ReactNode => {
     return holidays?.data
       .filter((holiday) => holiday.atDate.includes(year.toString()))
       .map((holiday, index) => (
@@ -57,7 +57,7 @@ const Status = () => {
       ));
   };
 
-  const holidaysByYears = (years: number[]) => {
+  const holidaysByYears = (years: number[]): ReactNode => {
     return years.map((year, index) => (
       <Fragment key={index}>
         <HolidaysGrid year={year}>{holidaysByYear(year)}</HolidaysGrid>

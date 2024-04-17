@@ -82,10 +82,6 @@ const Main = (): JSX.Element => {
     }
   };
 
-  console.log(news, isLoading, isRefetching);
-
-  console.log(scrollPosition);
-
   return (
     <div ref={containerRef} className="flex flex-col gap-5 pb-5">
       <div className="sticky top-0 flex flex-col md:flex-row items-center gap-3 md:gap-5 backdrop-blur-2xl z-10 rounded-lg p-2">
@@ -124,7 +120,7 @@ const Main = (): JSX.Element => {
           <div className="sticky bottom-0 flex justify-center items-center gap-5 backdrop-blur-2xl z-10 rounded-lg p-2 w-max m-auto">
             {news &&
               news.length > newAmountVisible &&
-              scrollPosition >= 100 && (
+              scrollPosition >= 10 && (
                 <Button
                   className="text-sm sm:text-base font-bold text-nowrap"
                   onClick={onMoreButtonClick}
@@ -133,7 +129,7 @@ const Main = (): JSX.Element => {
                 </Button>
               )}
 
-            {scrollPosition >= 100 && (
+            {scrollPosition >= 10 && (
               <Button
                 className="text-sm sm:text-base font-bold text-nowrap"
                 onClick={onToTopButtonClick}

@@ -5,6 +5,7 @@ import { RiSearchLine } from "react-icons/ri";
 import { searchStock } from "@/services/stock";
 
 import Spinner from "@/components/Spinner/Spinner";
+import StockCards from "@/components/StockCards/StockCards";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -31,12 +32,12 @@ const Stock = (): JSX.Element => {
       </div>
     );
 
-  if (error) return <div>Error</div>;
+  if (error) return <div>Error: {error.message}</div>;
   if (!stocks) return <div>No data</div>;
 
   console.log(stocks);
 
-  const onInputSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onInputSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setQuery(e.target.value);
   };
 
@@ -77,7 +78,9 @@ const Stock = (): JSX.Element => {
         <div className="flex justify-center items-center h-[100%] mt-5">
           <Spinner />
         </div>
-      ) : null}
+      ) : (
+        <StockCards {...stocks} />
+      )}
     </div>
   );
 };
