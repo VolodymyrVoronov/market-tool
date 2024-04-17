@@ -17,7 +17,8 @@ import Spinner from "../Spinner/Spinner";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
-interface IStockCardProps extends Omit<IStockSearchResult, "type"> {}
+interface IStockCardProps
+  extends Omit<IStockSearchResult, "displaySymbol" | "type"> {}
 
 const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
   const {

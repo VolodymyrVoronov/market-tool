@@ -20,7 +20,6 @@ const StockCards = memo(({ count, result }: IStockCardsProps): JSX.Element => {
             key={stock.symbol}
             description={stock.description}
             symbol={stock.symbol}
-            displaySymbol={stock.displaySymbol}
           />
         ))}
       </div>
