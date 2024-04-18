@@ -118,18 +118,16 @@ const Main = (): JSX.Element => {
           </div>
 
           <div className="sticky bottom-0 flex justify-center items-center gap-5 backdrop-blur-2xl z-10 rounded-lg p-2 w-max m-auto">
-            {news &&
-              news.length > newAmountVisible &&
-              scrollPosition >= 10 && (
-                <Button
-                  className="text-sm sm:text-base font-bold text-nowrap"
-                  onClick={onMoreButtonClick}
-                >
-                  Show more <RiMoreFill className="ml-2 h-5 w-5" />
-                </Button>
-              )}
+            {news && news.length > newAmountVisible && (
+              <Button
+                className="text-sm sm:text-base font-bold text-nowrap"
+                onClick={onMoreButtonClick}
+              >
+                Show more <RiMoreFill className="ml-2 h-5 w-5" />
+              </Button>
+            )}
 
-            {scrollPosition >= 10 && (
+            {scrollPosition >= 500 && (
               <Button
                 className="text-sm sm:text-base font-bold text-nowrap"
                 onClick={onToTopButtonClick}
