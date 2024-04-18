@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getCompanyProfile } from "@/services/profile";
-import { IStockSearchResult } from "@/types";
+import { ICompanyProfile, IStockSearchResult } from "@/types";
 
 import {
   Dialog,
@@ -42,6 +42,22 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
 
   if (error) return <Badge variant="destructive">Error: {error.message}</Badge>;
 
+  const {
+    country,
+    currency,
+    estimateCurrency,
+    exchange,
+    finnhubIndustry,
+    ipo,
+    logo,
+    marketCapitalization,
+    name,
+    phone,
+    shareOutstanding,
+    ticker,
+    weburl,
+  } = profile as ICompanyProfile;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -52,9 +68,7 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
         >
           {!profile?.country ? (
             <span className="text-sm lg:text-md text-balance text-red-500">
-              Information about{" "}
-              <span className="font-semibold">{description}</span> is not
-              available
+              Information is not available
             </span>
           ) : (
             <>
@@ -68,12 +82,95 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
       </DialogTrigger>
 
       <DialogContent className="md:max-w-[768px]">
-        <DialogHeader>
-          <DialogTitle>Stock details</DialogTitle>
-          <DialogDescription>
-            Anyone who has this link will be able to view this.
+        <DialogHeader className="mt-5">
+          <DialogTitle className="flex flex-row justify-between content-center items-start gap-2.5 text-2xl">
+            {name} <img src={logo} alt={name} className="max-w-[50px]" />
+          </DialogTitle>
+          <DialogDescription className="text-md text-left">
+            <a href={weburl} target="_blank">
+              {weburl}
+            </a>
           </DialogDescription>
         </DialogHeader>
+
+        <div className="flex flex-col gap-3 my-2.5">
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Country:</span>{" "}
+            {country}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Ticker:</span>{" "}
+            {ticker}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">IPO Date:</span>{" "}
+            {ipo}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Exchange:</span>{" "}
+            {exchange}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Industry:</span>{" "}
+            {finnhubIndustry}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Currency:</span>{" "}
+            {currency}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">
+              Market Capitalization:
+            </span>{" "}
+            {marketCapitalization?.toFixed(2)} $
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">
+              Share Outstanding:
+            </span>{" "}
+            {shareOutstanding}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">
+              Estimate Currency:
+            </span>{" "}
+            {estimateCurrency}
+          </Badge>
+          <Badge
+            className="flex items-start px-3 py-2 text-xl text-left"
+            variant="outline"
+          >
+            <span className="mr-2 text-slate-600 font-normal">Phone:</span>{" "}
+            {phone}
+          </Badge>
+        </div>
 
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
