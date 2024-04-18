@@ -86,11 +86,14 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
           <DialogTitle className="flex flex-row justify-between content-center items-start gap-2.5 text-2xl">
             {name} <img src={logo} alt={name} className="max-w-[50px]" />
           </DialogTitle>
-          <DialogDescription className="text-md text-left">
-            <a href={weburl} target="_blank">
-              {weburl}
-            </a>
-          </DialogDescription>
+
+          {weburl && (
+            <DialogDescription className="text-md text-left">
+              <a href={weburl} target="_blank">
+                {weburl}
+              </a>
+            </DialogDescription>
+          )}
         </DialogHeader>
 
         <div className="flex flex-col gap-3 my-2.5">
