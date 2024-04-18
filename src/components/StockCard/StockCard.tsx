@@ -31,8 +31,6 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
     refetchOnWindowFocus: false,
   });
 
-  console.log(profile);
-
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-[100%]">

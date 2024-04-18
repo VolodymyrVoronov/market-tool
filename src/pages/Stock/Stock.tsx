@@ -35,8 +35,6 @@ const Stock = (): JSX.Element => {
   if (error) return <div>Error: {error.message}</div>;
   if (!stocks) return <div>No data</div>;
 
-  console.log(stocks);
-
   const onInputSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setQuery(e.target.value);
   };
