@@ -1,7 +1,8 @@
+import { memo } from "react";
+
 import { IStockSearchResult } from "@/types";
 
 import StockCard from "../StockCard/StockCard";
-import { memo } from "react";
 
 interface IStockCardsProps {
   count: number;
