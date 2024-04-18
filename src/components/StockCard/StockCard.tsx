@@ -81,7 +81,7 @@ const StockCard = ({ description, symbol }: IStockCardProps): JSX.Element => {
 
       <DialogContent className="md:max-w-[768px]">
         <DialogHeader className="mt-5">
-          <DialogTitle className="flex flex-row justify-between content-center items-start gap-2.5 text-2xl">
+          <DialogTitle className="flex flex-row justify-between content-center items-start gap-2.5 text-2xl text-left">
             {name} <img src={logo} alt={name} className="max-w-[50px]" />
           </DialogTitle>
 
